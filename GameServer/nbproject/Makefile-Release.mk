@@ -36,7 +36,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/src/Network/Socket/SocketTCP.o
+	${OBJECTDIR}/src/Client.o \
+	${OBJECTDIR}/src/Master.o \
+	${OBJECTDIR}/src/SocketTCP.o
 
 
 # C Compiler Flags
@@ -68,10 +70,20 @@ ${OBJECTDIR}/main.o: main.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
-${OBJECTDIR}/src/Network/Socket/SocketTCP.o: src/Network/Socket/SocketTCP.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/Network/Socket
+${OBJECTDIR}/src/Client.o: src/Client.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Network/Socket/SocketTCP.o src/Network/Socket/SocketTCP.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Client.o src/Client.cpp
+
+${OBJECTDIR}/src/Master.o: src/Master.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Master.o src/Master.cpp
+
+${OBJECTDIR}/src/SocketTCP.o: src/SocketTCP.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SocketTCP.o src/SocketTCP.cpp
 
 # Subprojects
 .build-subprojects:

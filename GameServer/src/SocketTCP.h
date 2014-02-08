@@ -17,6 +17,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <iostream>
 
 /*!
@@ -38,6 +39,12 @@ public:
      */
     SocketTCP();
    
+    /*!
+     * \brief Constructor with descriptor
+     * \param desc Descriptor that will be assigned to the socket
+     */
+    SocketTCP(int desc);
+    
     /*!
      * \brief Copy constructor
      * \param Socket : The socket to copy
@@ -108,6 +115,12 @@ public:
      * \param size Number of bytes that has to be send
      */
     int sendSocket(const void * buffer, size_t size);
+    
+    
+    /*!
+     * \brief Close the socket descriptor
+     */
+    void closeSocket();
     
 private:
     static const int _domain = AF_INET; /*!< Address domain */

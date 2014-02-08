@@ -7,7 +7,7 @@
 
 #include "SocketTCP.h"
 
-SocketTCP::SocketTCP(){
+SocketTCP::SocketTCP() {
     int sockDesc;
     if((sockDesc = socket(_domain,_sockType,0)) < 0) {
         perror("Socket descriptor creation error");
@@ -16,10 +16,15 @@ SocketTCP::SocketTCP(){
     }
 }
 
+SocketTCP::SocketTCP(int desc) {
+    setDescriptor(desc);
+}
+
 SocketTCP::SocketTCP(const SocketTCP& orig) {
 }
 
 SocketTCP::~SocketTCP() {
+    close(getDescriptor());
 }
 
 void SocketTCP::setDescriptor(int desc){_descriptor = desc;}
@@ -78,4 +83,11 @@ int SocketTCP::sendSocket(const void * buffer, size_t size) {
         perror("Send error");
     }
     return sizeSent;
+}
+
+void SocketTCP::closeSocket() {
+    int ret;
+    if((ret = close(getDescriptor())) != 0) {
+        perror("Close error");
+    }
 }
