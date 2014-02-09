@@ -21,7 +21,7 @@ using namespace std;
  */
 int main(int argc, char** argv) 
 {
-    Master master = Master();
+    Master master;
     master.run();
     return 0;
 }

@@ -12,7 +12,7 @@
 
 class Client {
 public:
-    Client();
+    Client(int desc);
     Client(const Client& orig);
     virtual ~Client();
     

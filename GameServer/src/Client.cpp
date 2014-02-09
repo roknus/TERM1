@@ -7,9 +7,9 @@
 
 #include "Client.h"
 
-Client::Client() {
+Client::Client(int desc) {
+    _socket.setDescriptor(desc);
 }
-
 Client::Client(const Client& orig) {
 }
 

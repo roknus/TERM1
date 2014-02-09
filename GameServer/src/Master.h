@@ -8,9 +8,8 @@
 #ifndef MASTER_H
 #define	MASTER_H
 
+#include "NetworkModule.h"
 #include <iostream>
-#include <vector>
-#include "Client.h"
 
 class Master {
 public:
@@ -18,19 +17,10 @@ public:
     Master(const Master& orig);
     virtual ~Master();
     
-    /*!
-     * \todo
-     */
-    std::vector<Client> getClientList();
-    void setClientList(std::vector<Client> list);
-    
     void run();
     
-    void addClient(Client newClient);
-    
 private:
-    std::vector<Client> _clientList;
-
+    NetworkModule _networkModule;
 };
 
 #endif	/* MASTER_H */

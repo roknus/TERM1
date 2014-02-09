@@ -67,7 +67,8 @@ int SocketTCP::recvSocket(int sock, void * buffer, size_t size) {
 
 void SocketTCP::connectSocket(const char* address, int port) {
     struct hostent * hst = gethostbyname((char *)address);
-    _sockAddr.sin_addr.s_addr = ((struct in_addr *)(hst->h_addr))->s_addr;    
+    _sockAddr.sin_addr.s_addr = ((struct in_addr *)(hst->h_addr))->s_addr;  
+    delete hst;
     _sockAddr.sin_family = _domain;
     _sockAddr.sin_port = htons((short)port);
     

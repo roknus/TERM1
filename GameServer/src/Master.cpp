@@ -18,4 +18,5 @@ Master::~Master() {
 
 void Master::run() {
     std::cout << "Starting master..." << std::endl;
+    _networkModule.run();
 }

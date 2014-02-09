@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/Client.o \
 	${OBJECTDIR}/src/Master.o \
+	${OBJECTDIR}/src/NetworkModule.o \
 	${OBJECTDIR}/src/SocketTCP.o
 
 
@@ -55,7 +56,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-lpthread
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -79,6 +80,11 @@ ${OBJECTDIR}/src/Master.o: src/Master.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Master.o src/Master.cpp
+
+${OBJECTDIR}/src/NetworkModule.o: src/NetworkModule.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/NetworkModule.o src/NetworkModule.cpp
 
 ${OBJECTDIR}/src/SocketTCP.o: src/SocketTCP.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
