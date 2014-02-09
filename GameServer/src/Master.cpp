@@ -8,11 +8,6 @@
 #include "Master.h"
 
 Master::Master() {
-    if((_inputDesc = fopen("/dev/pts/1","r+")) == NULL) {
-        perror("Console file descriptor open error");
-        exit(0);
-    }
-    fprintf(_inputDesc,"\nType ? for help...\n");
 }
 
 Master::Master(const Master& orig) {
@@ -28,11 +23,4 @@ void Master::run() {
 }
 
 void Master::startConsole() {
-    /*bool exit = false;
-    while(!exit) {
-        char command[256] = "";
-        fgets(command,23,_inputDesc);
-        std::cout << command << std::endl;
-    }
-     */
 }

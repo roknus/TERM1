@@ -22,7 +22,7 @@ NetworkModule::~NetworkModule() {
     for(int i = 0; i < _clientList.size(); i++) {
         delete _clientList[i];
     }
-    while(pthread_cancel(idMainThread) != 0) {
+    while(pthread_cancel(_idMainThread) != 0) {
         perror("Main network thread");
     }
     std::cout << "Main network thread terminated" << std::endl;    
@@ -49,10 +49,10 @@ void NetworkModule::run() {
     param->_clientList = &_clientList;
     param->_socketTCP = &_socketTCP;
     
-    while(pthread_create(&idMainThread,NULL,mainThread,param) != 0) {
+    while(pthread_create(&_idMainThread,NULL,mainThread,param) != 0) {
         perror("Thread creation error");
     }
-    while(pthread_detach(idMainThread) != 0) {
+    while(pthread_detach(_idMainThread) != 0) {
         perror("Thread detach error");
     }
     std::cout << "Network module enabled !" << std::endl;
@@ -68,7 +68,8 @@ void * mainThread(void * param) {
     while(true) {
         if((desc = _socketTCP->acceptSocket()) != -1) {
             std::cout << "New client connection..." << std::endl;
-            _clientList->push_back(new Client(desc));
+            Client * newClient = new Client(desc);
+            _clientList->push_back(newClient);
         }
     }
 }

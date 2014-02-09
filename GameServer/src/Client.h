@@ -9,19 +9,22 @@
 #define	CLIENT_H
 
 #include "SocketTCP.h"
+#include <pthread.h>
 
 class Client {
 public:
     Client(int desc);
     Client(const Client& orig);
     virtual ~Client();
-    
-    SocketTCP getSocket();
-    void setSocket();
+ 
+    void startRecv();
     
 private:
     SocketTCP _socket;
+    pthread_t _threadRecv;
 };
+
+void * threadRecv(void * param);
 
 #endif	/* CLIENT_H */
 

@@ -31,7 +31,7 @@ public:
 private:
     SocketTCP _socketTCP;
     int _port;
-    pthread_t idMainThread;
+    pthread_t _idMainThread;
     std::vector<Client *> _clientList;
 
 };

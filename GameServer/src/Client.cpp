@@ -16,3 +16,10 @@ Client::Client(const Client& orig) {
 Client::~Client() {
 }
 
+void Client::startRecv() {
+    pthread_create(&_threadRecv,NULL,threadRecv,NULL);
+}
+
+void * threadRecv(void * param) {
+    
+}
