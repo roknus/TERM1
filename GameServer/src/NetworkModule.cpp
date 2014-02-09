@@ -9,7 +9,7 @@
 #include "Client.h"
 
 NetworkModule::NetworkModule() {
-    std::cout << "Initializing network module..." << std::endl;  
+    std::cout << "Initializing network module..." << std::endl;
     recoverPort();
     _socketTCP.bindSocket(_port);
     _socketTCP.listenSocket(WAITING_QUEUE_LENGTH);
@@ -19,6 +19,9 @@ NetworkModule::NetworkModule(const NetworkModule& orig) {
 }
 
 NetworkModule::~NetworkModule() {
+    for(int i = 0; i < _clientList.size(); i++) {
+        delete _clientList[i];
+    }
     while(pthread_cancel(idMainThread) != 0) {
         perror("Main network thread");
     }
@@ -42,11 +45,11 @@ void NetworkModule::run() {
     std::cout << "Starting network module..." << std::endl;
     std::cout << "\tListening port : " << _port << std::endl;
     
-    struct mainThreadParam param;
-    param._clientList = &_clientList;
-    param._socketTCP = &_socketTCP;
+    struct mainThreadParam * param = (struct mainThreadParam *)malloc(sizeof(struct mainThreadParam));
+    param->_clientList = &_clientList;
+    param->_socketTCP = &_socketTCP;
     
-    while(pthread_create(&idMainThread,NULL,mainThread,&param) != 0) {
+    while(pthread_create(&idMainThread,NULL,mainThread,param) != 0) {
         perror("Thread creation error");
     }
     while(pthread_detach(idMainThread) != 0) {
@@ -57,14 +60,15 @@ void NetworkModule::run() {
 
 void * mainThread(void * param) {
     struct mainThreadParam * par = (struct mainThreadParam *)param;
+    delete (struct mainThreadParam *)param;
     SocketTCP * _socketTCP = par->_socketTCP;
-    std::vector<Client> * _clientList = par->_clientList;
+    std::vector<Client *> * _clientList = par->_clientList;
         
     int desc;
     while(true) {
         if((desc = _socketTCP->acceptSocket()) != -1) {
             std::cout << "New client connection..." << std::endl;
-            _clientList->push_back(Client(desc));
+            _clientList->push_back(new Client(desc));
         }
     }
 }

@@ -32,12 +32,12 @@ private:
     SocketTCP _socketTCP;
     int _port;
     pthread_t idMainThread;
-    std::vector<Client> _clientList;
+    std::vector<Client *> _clientList;
 
 };
 
 struct mainThreadParam {
-    std::vector<Client> * _clientList;
+    std::vector<Client *> * _clientList;
     SocketTCP * _socketTCP;
 };
 

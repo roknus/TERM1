@@ -9,7 +9,9 @@
 #define	MASTER_H
 
 #include "NetworkModule.h"
+#include <stdio.h>
 #include <iostream>
+#include <fstream>
 
 class Master {
 public:
@@ -19,8 +21,11 @@ public:
     
     void run();
     
+    void startConsole();
+    
 private:
     NetworkModule _networkModule;
+    FILE * _inputDesc;
 };
 
 #endif	/* MASTER_H */
