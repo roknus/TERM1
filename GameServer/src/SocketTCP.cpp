@@ -55,9 +55,9 @@ int SocketTCP::acceptSocket() {
     return desc;
 }
 
-int SocketTCP::recvSocket(int sock, void * buffer, size_t size) {
+int SocketTCP::recvSocket(void * buffer, size_t size) {
     int sizeRecv;
-    if((sizeRecv = recv(sock,buffer,size,0)) == 0) {
+    if((sizeRecv = recv(getDescriptor(),buffer,size,0)) == 0) {
         std::cout << "Client disconnected" << std::endl;
     } else if(sizeRecv < 0) {
         perror("Recv error");

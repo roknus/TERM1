@@ -48,6 +48,7 @@ void NetworkModule::run() {
     struct mainThreadParam * param = (struct mainThreadParam *)malloc(sizeof(struct mainThreadParam));
     param->_clientList = &_clientList;
     param->_socketTCP = &_socketTCP;
+    param->_networkModule = this;
     
     while(pthread_create(&_idMainThread,NULL,mainThread,param) != 0) {
         perror("Thread creation error");
@@ -60,16 +61,19 @@ void NetworkModule::run() {
 
 void * mainThread(void * param) {
     struct mainThreadParam * par = (struct mainThreadParam *)param;
-    delete (struct mainThreadParam *)param;
     SocketTCP * _socketTCP = par->_socketTCP;
     std::vector<Client *> * _clientList = par->_clientList;
+    NetworkModule * _networkModule = par->_networkModule;
+    
         
     int desc;
     while(true) {
         if((desc = _socketTCP->acceptSocket()) != -1) {
             std::cout << "New client connection..." << std::endl;
-            Client * newClient = new Client(desc);
+            Client * newClient = new Client(desc,_networkModule);
             _clientList->push_back(newClient);
+            newClient->startRecv();
         }
     }
+    delete (struct mainThreadParam *)param;
 }

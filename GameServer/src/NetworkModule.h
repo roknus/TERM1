@@ -39,6 +39,7 @@ private:
 struct mainThreadParam {
     std::vector<Client *> * _clientList;
     SocketTCP * _socketTCP;
+    NetworkModule * _networkModule;
 };
 
 void * mainThread(void * param);

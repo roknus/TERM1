@@ -95,11 +95,10 @@ public:
     /*!
      * \brief Method trying to receive information in the socket
      * \return Return the number of bytes received, 0 if the client disconnected, -1 if an error occurred
-     * \param sock Socket descriptor we are trying to read
      * \param buffer Buffer we are trying to write the informations
      * \param size Number of bytes we are trying to read
      */
-    int recvSocket(int sock, void * buffer, size_t size);
+    int recvSocket(void * buffer, size_t size);
     
     /*!
      * \brief Connect to a distant socket

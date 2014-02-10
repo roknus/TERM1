@@ -20,6 +20,7 @@ void Master::run() {
     std::cout << "Starting master..." << std::endl;
     _networkModule.run();
     startConsole();
+    while(true);
 }
 
 void Master::startConsole() {
