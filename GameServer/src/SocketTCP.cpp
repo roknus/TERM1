@@ -65,10 +65,9 @@ int SocketTCP::recvSocket(void * buffer, size_t size) {
     return sizeRecv;
 }
 
-void SocketTCP::connectSocket(const char* address, int port) {
+int SocketTCP::connectSocket(const char* address, int port) {
     struct hostent * hst = gethostbyname((char *)address);
-    _sockAddr.sin_addr.s_addr = ((struct in_addr *)(hst->h_addr))->s_addr;  
-    delete hst;
+    _sockAddr.sin_addr.s_addr = ((struct in_addr *)(hst->h_addr))->s_addr;
     _sockAddr.sin_family = _domain;
     _sockAddr.sin_port = htons((short)port);
     
@@ -76,6 +75,7 @@ void SocketTCP::connectSocket(const char* address, int port) {
     if((con = connect(getDescriptor(),(struct sockaddr *)&_sockAddr,sizeof(_sockAddr))) != 0) {
         perror("Connect error");
     }
+    return con;
 }
 
 int SocketTCP::sendSocket(const void * buffer, size_t size) {

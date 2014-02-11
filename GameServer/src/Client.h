@@ -15,13 +15,16 @@ class NetworkModule;
 
 class Client {
 public:
-    Client(int desc, NetworkModule * networkModule);
+    Client(int id, int desc, NetworkModule * networkModule);
     Client(const Client& orig);
     virtual ~Client();
  
     void startRecv();
     
+    int getId();
+    
 private:
+    int _id;
     SocketTCP _socket;
     pthread_t _threadRecv;
     NetworkModule * _networkModule;
@@ -29,12 +32,16 @@ private:
 
 void * threadRecv(void * param);
 
+struct clientParam {
+    int id;
+    NetworkModule * _networkModule;
+    SocketTCP * _socketTCP;
+};
+
 struct systemProtocole {
-    short int size;
     short int id;
     short int type;
-    char * body;
-    static const char emptyString = '\0';
+    char body[256];
 };
 
 #endif	/* CLIENT_H */

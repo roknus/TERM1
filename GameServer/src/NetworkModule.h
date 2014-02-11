@@ -28,6 +28,8 @@ public:
     
     void run();
     
+    void removeClient(int id);
+    
 private:
     SocketTCP _socketTCP;
     int _port;

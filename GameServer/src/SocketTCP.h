@@ -102,10 +102,11 @@ public:
     
     /*!
      * \brief Connect to a distant socket
+     * \return Return the connection value
      * \param address Address we are trying to connect to
      * \param port Port on which the distant socket is listening
      */
-    void connectSocket(const char * address, int port);
+    int connectSocket(const char * address, int port);
     
     /*!
      * \brief Send message to a distant socket

@@ -59,18 +59,29 @@ void NetworkModule::run() {
     std::cout << "Network module enabled !" << std::endl;
 }
 
+void NetworkModule::removeClient(int id) {
+    for(int i = 0; i < _clientList.size(); i++) {
+        if(_clientList[i]->getId() == id) {
+            delete _clientList[i];
+            _clientList.erase(_clientList.begin()+i);
+        }
+    }    
+}
+
 void * mainThread(void * param) {
     struct mainThreadParam * par = (struct mainThreadParam *)param;
     SocketTCP * _socketTCP = par->_socketTCP;
     std::vector<Client *> * _clientList = par->_clientList;
     NetworkModule * _networkModule = par->_networkModule;
     
+    int id = 0;   
         
     int desc;
     while(true) {
         if((desc = _socketTCP->acceptSocket()) != -1) {
             std::cout << "New client connection..." << std::endl;
-            Client * newClient = new Client(desc,_networkModule);
+            Client * newClient = new Client(id, desc,_networkModule);
+            id++;
             _clientList->push_back(newClient);
             newClient->startRecv();
         }

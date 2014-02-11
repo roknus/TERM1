@@ -25,7 +25,6 @@ public:
     
 private:
     NetworkModule _networkModule;
-    FILE * _inputDesc;
 };
 
 #endif	/* MASTER_H */
